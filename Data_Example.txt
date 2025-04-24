@@ -1,0 +1,23 @@
+DBAR
+x---x x-----x x-----x x-----x x---x x------x x------x x-------x x-------x x-------x x-------x
+BARRA  PD(PU)  QD(PU) Bsh(PU)  TIPO  Vesp(PU) Oesp(°) PGesp(PU) Cus($/MW) CGmin(PU) CGmax(PU)
+   01    0.00    0.00    0.00    SW     1.00     0.00      3.50     50.00      0.00      2.20
+   02    0.00    0.00    0.00    PV     1.00     0.00      1.50     80.00      0.00      2.20
+   03    2.20    0.00    0.00    PQ     1.00     0.00      0.00     00.00      0.00      0.00
+   04    2.80    0.00    0.00    PQ     1.00     0.00      0.00     00.00      0.00      0.00
+####
+
+DCIR
+x---x x---x x---x x------x  x------x x-------x x------x x--------x x-----------x  x------x
+BDE   BPARA  NCIR  RES(PU)  REAT(PU) SUCsh(PU)  TAP(PU) DEF(GRAUS) LIG(L)DESL(D)   CAP(PU)
+   01    03    01   0.0200   0.1500      0.00     1.00     00.000             L    1.500
+   01    04    02   0.0200   0.2000      0.00     1.00     00.000             L    1.500
+   02    03    03   0.0300   0.3000      0.00     1.00     00.000             L    1.500
+   02    04    04   0.0300   0.2500      0.00     1.00     00.000             L    1.500
+   03    04    05   0.0400   0.4000      0.00     1.00     00.000             L    1.500
+####
+
+OBS.:
+01 - If there is more than one circuit between two bars, each one must be inserted into DCIR separately.
+02 - The bus shunt suceptance (Bsh) must be entered as: + (positive) for C and -(negative) for L.
+03 - The shunt suceptance of the DCIR circuit (SUCsh) is the total of the circuit.
