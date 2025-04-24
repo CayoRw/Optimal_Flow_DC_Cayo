@@ -1,4 +1,5 @@
 function DispResults(DBARoptimal, DCIR, Pcirc, Sbase,fval,x,NGer,NCar)
+    %% Follow me on github: www.github.com/CayoRw/Optimal_Flow_DC_Cayo
     % DispResults - Exibe os resultados das barras e linhas do sistema.
     %
     % Sintaxe:
@@ -21,13 +22,15 @@ function DispResults(DBARoptimal, DCIR, Pcirc, Sbase,fval,x,NGer,NCar)
     count2 = 1;
     Pltotal = 0;
     Pgtotal = 0;
+    Cortetotal = 0;
+    Custotal = 0;
     % Exibe os resultados das barras
     disp('Resultados das Barras');
     disp('=====================');
     disp(' ');
     disp(sprintf('Tabela %1d: Fluxo DC sem perdas', count));
-    disp('Barra Tipo Tensão(pu)  Ângulo(°)  PL(MW) Corte(MW) PG(MW)  CGmax(MW) Cus($/MW) Cus($)');
-    disp('+---+ +--+ +--------+ +--------+ +-----+ +-------+ +-----+ +-------+ +-------+ +-----+');
+    disp('Barra Tipo Tensão(pu)  Ângulo(°)  PL(MW) Corte(MW) PG(MW)  CGmax(MW) Cus($/MW)  Custo($)');
+    disp('+---+ +--+ +--------+ +--------+ +-----+ +-------+ +-----+ +-------+ +-------+ +--------+');
     corte = 0;
     for ib = 1:NBus
         ang = DBARoptimal(ib, 7) * 180 / pi; % Converte ângulo para graus
@@ -42,19 +45,22 @@ function DispResults(DBARoptimal, DCIR, Pcirc, Sbase,fval,x,NGer,NCar)
         Pl = DBARoptimal(ib, 2) * Sbase; % Potência demandada em MW
         Cus = DBARoptimal(ib,9);
         Cmax = DBARoptimal(ib,11)*Sbase;
-        CustB = Cus * Pg * Sbase;
+        CustB = Cus * Pg;
         if (DBARoptimal(ib,2)~=0)
-            corte = x(NBus+NGer-1)*Sbase;
+            corte = x(NVar-NCar+count2)*Sbase;
             count2 = count2+1;
+            Cortetotal = corte + Cortetotal;
         else
             corte = 0;
         end
         Pltotal = Pl + Pltotal;
         Pgtotal = Pg + Pgtotal;
-        disp(sprintf('%5d %4s %10.4f %10.4f %7.2f %9.2f %7.2f %9.2f %9.2f %7.2f', ib, tipo(ib, 1), DBARoptimal(ib, 6), ang, Pl, corte, Pg, Cmax, Cus, CustB));
+        Custotal = Cus*Pg + Custotal;
+        disp(sprintf('%5d %4s %10.4f %10.4f %7.2f %9.2f %7.2f %9.2f %9.2f %10.2f', ib, tipo(ib, 1), DBARoptimal(ib, 6), ang, Pl, corte, Pg, Cmax, Cus, CustB));
     end
-            disp('+---+ +--+ +--------+ +--------+ +-----+ +-------+ +-----+ +-------+ +-------+ +-----+')
-    disp(sprintf('Total: ................................. %9.2f ......... %7.2f ......... %7.2f',Pltotal,fval*Sbase))
+    Custotal = Custotal;
+            disp('+---+ +--+ +--------+ +--------+ +-----+ +-------+ +-----+ +-------+ +-------+ +--------+')
+    disp(sprintf('Total: ......................... %7.2f %9.2f %7.2f ................... %10.2f',Pltotal,Cortetotal,Pgtotal,Custotal))
     disp(' ');
     count = count + 1;
     % Exibe os resultados das linhas
@@ -74,4 +80,5 @@ function DispResults(DBARoptimal, DCIR, Pcirc, Sbase,fval,x,NGer,NCar)
     disp('+--+ +--+ +------+ +----------+ +----------+ +------+');
     disp(' ');
     disp(sprintf('Custo total: $ %f',fval*Sbase))
+    disp(' ');
 end

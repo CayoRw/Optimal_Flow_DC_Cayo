@@ -1,4 +1,5 @@
-function [Pg,Pl,Pgmax,Pgmin,Cost,Smax,NGer,NCar] = GetMainDatas(DBAR,DCIR)
+function [Pg,Pl,Pgmax,Pgmin,Cost,Smax,NGer,NCar,NBus,NLin] = GetMainDatas(DBAR,DCIR)
+    %% Follow me on github: www.github.com/CayoRw/Optimal_Flow_DC_Cayo
     % Inicialização das variáveis
     [NBus, ~] = size(DBAR);
     [NLin, ~] = size(DCIR);

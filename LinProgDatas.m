@@ -1,4 +1,5 @@
 function [f,A,b,Aeq,beq,lb,ub] = LinProgDatas(Pg,Pl,Pgmax,Pgmin,Cost,Smax,DBAR,DCIR,NGer,NCar,Bbus,sw)
+    %% Follow me on github: www.github.com/CayoRw/Optimal_Flow_DC_Cayo
     % Inicialização das variáveis
     [NBus, ~] = size(DBAR);
     [NLin, ~] = size(DCIR);
